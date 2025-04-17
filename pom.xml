@@ -21,10 +21,10 @@
             <version>1.18.38</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
-            <scope>provided</scope>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.115.Final</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
