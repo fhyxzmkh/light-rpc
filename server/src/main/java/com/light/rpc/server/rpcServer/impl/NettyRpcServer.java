@@ -83,4 +83,10 @@ public class NettyRpcServer implements RpcServer {
             workGroup.shutdownGracefully();
         }
     }
+    
+    @Override
+    public boolean isRunning() {
+        return bossGroup != null && !bossGroup.isShutdown() && !bossGroup.isShuttingDown()
+                && workGroup != null && !workGroup.isShutdown() && !workGroup.isShuttingDown();
+    }
 }

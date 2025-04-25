@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPC 注册中心配置</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+            margin-top: 30px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .registry-status {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .status-running {
+            color: #198754;
+        }
+        .status-stopped {
+            color: #dc3545;
+        }
+        .btn-action {
+            min-width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">RPC 注册中心配置</h1>
+        
+        <!-- 提示消息 -->
+        <div th:if="${message}" class="alert" th:classappend="${alertClass}" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+        
+        <!-- 注册中心状态卡片 -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">注册中心状态</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="registry-status mb-0">
+                            状态: 
+                            <span th:if="${isRunning}" class="status-running">运行中</span>
+                            <span th:unless="${isRunning}" class="status-stopped">已停止</span>
+                        </p>
+                    </div>
+                    <div>
+                        <form th:if="${isRunning}" th:action="@{/registry/stop}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-action">停止注册中心</button>
+                        </form>
+                        <form th:unless="${isRunning}" th:action="@{/registry/start}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-success btn-action">启动注册中心</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 注册中心配置卡片 -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">注册中心配置</h5>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/registry/update}" method="post">
+                    <div class="mb-3">
+                        <label for="address" class="form-label">地址</label>
+                        <input type="text" class="form-control" id="address" name="address" th:value="${config.address}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="port" class="form-label">端口</label>
+                        <input type="number" class="form-control" id="port" name="port" th:value="${config.port}" required min="1" max="65535">
+                    </div>
+                    <div class="mb-3">
+                        <label for="rootPath" class="form-label">根路径</label>
+                        <input type="text" class="form-control" id="rootPath" name="rootPath" th:value="${config.rootPath}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sessionTimeout" class="form-label">会话超时时间（毫秒）</label>
+                        <input type="number" class="form-control" id="sessionTimeout" name="sessionTimeout" th:value="${config.sessionTimeout}" required min="1000">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="autoStart" name="autoStart" th:checked="${config.autoStart}">
+                        <label class="form-check-label" for="autoStart">自动启动</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存配置</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

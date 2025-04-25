@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "rpc.client")
 public class ClientConfig {
-    private String registryAddress = "127.0.0.1";
+    private String registryAddress = "10.100.164.20";
     private int registryPort = 2181;
     private int timeout = 5000;
     private boolean useLocalCall = false;

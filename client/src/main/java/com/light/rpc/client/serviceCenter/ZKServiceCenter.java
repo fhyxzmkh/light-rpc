@@ -1,5 +1,8 @@
 package com.light.rpc.client.serviceCenter;
 
+import com.light.rpc.client.config.ClientConfig;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -8,7 +11,11 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import java.net.InetSocketAddress;
 import java.util.List;
 
+@Slf4j
 public class ZKServiceCenter implements ServiceCenter{
+
+    @Resource
+    private ClientConfig clientConfig;
 
     // curator 提供的zookeeper客户端
     private CuratorFramework client;
@@ -24,10 +31,11 @@ public class ZKServiceCenter implements ServiceCenter{
         // sessionTimeoutMs 与 zoo.cfg中的tickTime 有关系，
         // zk还会根据minSessionTimeout与maxSessionTimeout两个参数重新调整最后的超时值。默认分别为tickTime 的2倍和20倍
         // 使用心跳监听状态
-        this.client = CuratorFrameworkFactory.builder().connectString("127.0.0.1:32768")
+        this.client = CuratorFrameworkFactory.builder().connectString(clientConfig.getRegistryAddress() + ':' + clientConfig.getRegistryPort())
                 .sessionTimeoutMs(40000).retryPolicy(policy).namespace(ROOT_PATH).build();
         this.client.start();
-        System.out.println("zookeeper 连接成功");
+
+        log.info("ZK service center started successfully");
     }
 
     //根据服务名（接口名）返回地址

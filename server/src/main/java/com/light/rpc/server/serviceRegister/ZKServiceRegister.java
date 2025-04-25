@@ -1,6 +1,6 @@
 package com.light.rpc.server.serviceRegister;
 
-import com.light.rpc.registry.RegistryCenter;
+import com.light.rpc.registry.config.RegistryCenter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -13,7 +13,6 @@ import java.net.InetSocketAddress;
 @Component
 public class ZKServiceRegister implements ServiceRegister {
 
-    @Resource
     private RegistryCenter registryCenter;
 
     @Override
