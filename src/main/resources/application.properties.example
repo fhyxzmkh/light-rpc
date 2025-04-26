@@ -1,0 +1,15 @@
+# ==========注册中心配置==========
+# ZooKeeper注册中心地址
+light.rpc.registry-address=127.0.0.1:2181
+
+# ==========服务提供方配置==========
+# 服务发布地址（提供服务的主机和端口）
+light.rpc.server-address=127.0.0.1:8000
+
+# ==========服务消费方配置==========
+# 直连服务地址（当不使用注册中心而是直接连接服务提供方时使用）
+light.rpc.direct-server-address=127.0.0.1:8000
+
+# 服务名称和版本
+light.rpc.service-name=exampleService
+light.rpc.service-version=1.0.0
