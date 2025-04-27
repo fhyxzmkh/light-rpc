@@ -160,11 +160,12 @@ public class RpcServer implements ApplicationContextAware, InitializingBean, Dis
     private void registerServices() throws Exception {
         if (serviceRegistry != null && !handlerMap.isEmpty()) {
             // 获取本地IP地址
-            String host = InetAddress.getLocalHost().getHostAddress();
+            // String host = InetAddress.getLocalHost().getHostAddress();
             
             // 注册所有服务
             for (String serviceName : handlerMap.keySet()) {
-                String serviceAddress = host + ":" + serverPort;
+                // String serviceAddress = host + ":" + serverPort;
+                String serviceAddress = serverAddress + ":" + serverPort;
                 serviceRegistry.register(serviceName, serviceAddress);
                 log.info("注册服务: {} => {}", serviceName, serviceAddress);
             }
